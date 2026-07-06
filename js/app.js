@@ -263,41 +263,22 @@ function spawnParticles(container) {
 //  Rendering
 // ==============================
 function renderTabs() {
-  const existingTabs = $$('.tab[data-board]');
   const pools = getCustomPools();
 
-  // Remove old pool tabs (keep built-in + the "+" button if it exists)
+  // Remove old pool tabs
   $$('.tab-pool').forEach(t => t.remove());
 
-  // Rebuild
-  const addTab = $('#add-pool-tab');
+  // Rebuild pool tabs
   pools.forEach(pool => {
     const btn = document.createElement('button');
     btn.className = 'tab tab-pool';
     btn.dataset.board = pool.id;
     btn.textContent = `📦 ${pool.name}`;
     btn.addEventListener('click', () => switchBoard(pool.id));
-
     // Delete pool on long-press / right-click
     btn.addEventListener('contextmenu', (e) => { e.preventDefault(); deletePool(pool.id); });
-
-    if (addTab) {
-      boardTabs.insertBefore(btn, addTab);
-    } else {
-      boardTabs.appendChild(btn);
-    }
-  });
-
-  // Ensure "+" tab exists
-  if (!addTab) {
-    const btn = document.createElement('button');
-    btn.className = 'tab tab-add';
-    btn.id = 'add-pool-tab';
-    btn.textContent = '+';
-    btn.title = '创建饮品池';
-    btn.addEventListener('click', openPoolModal);
     boardTabs.appendChild(btn);
-  }
+  });
 
   // Highlight current
   $$('.tab').forEach(t => {
@@ -429,7 +410,7 @@ function openPoolModal(poolId = null) {
 
   // Render all drinks as cards with pre-checked state
   drinkGrid.innerHTML = allDrinks.map(d => `
-    <label class="drink-card" data-drink-id="${d.id}">
+    <label class="drink-card" data-drink-id="${d.id}" onclick="void(0)">
       <input type="checkbox" class="drink-card-check" value="${d.id}" ${checkedSet.has(d.id) ? 'checked' : ''}>
       <span class="drink-card-body">
         <span class="drink-card-name">${d.name}</span>
@@ -437,6 +418,9 @@ function openPoolModal(poolId = null) {
       </span>
     </label>
   `).join('');
+
+  // Update hint visibility based on initial state
+  updatePoolSaveState();
 
   poolModal.hidden = false;
   poolNameInp.focus();
@@ -446,7 +430,15 @@ function openPoolModal(poolId = null) {
 function updatePoolSaveState() {
   if (poolModal.hidden) return;
   const checked = $$('.drink-card-check:checked');
-  poolSaveBtn.disabled = checked.length === 0 || poolNameInp.value.trim() === '';
+  const hasName = poolNameInp.value.trim() !== '';
+  poolSaveBtn.disabled = checked.length === 0 || !hasName;
+
+  // Toggle hint: show greyed-out hint when satisfied, full hint when drinks needed
+  const hint = $('#drink-hint');
+  if (hint) {
+    hint.classList.toggle('satisfied', checked.length > 0);
+    hint.textContent = checked.length > 0 ? `已选 ${checked.length} 款饮品` : '请至少勾选一款饮品';
+  }
 }
 drinkGrid.addEventListener('change', updatePoolSaveState);
 poolNameInp.addEventListener('input', updatePoolSaveState);
@@ -530,7 +522,7 @@ resetBtn.addEventListener('click', () => {
 boardTabs.addEventListener('click', (e) => {
   const tab = e.target.closest('.tab');
   if (!tab) return;
-  if (tab.id === 'add-pool-tab') return; // handled separately
+  if (tab.classList.contains('tab-pool')) return; // handled by pool tab's own listener
   const boardId = tab.dataset.board;
   if (boardId && boardId !== currentBoard) {
     switchBoard(boardId);
@@ -590,14 +582,8 @@ async function init() {
   // Restore price toggle visual
   priceToggle.classList.toggle('on', priceVisible);
 
-  // Build tabs
-  const addTab = document.createElement('button');
-  addTab.className = 'tab tab-add';
-  addTab.id = 'add-pool-tab';
-  addTab.textContent = '+';
-  addTab.title = '创建饮品池';
-  addTab.addEventListener('click', () => openPoolModal());
-  boardTabs.appendChild(addTab);
+  // Pool creation link (moved out of tab bar)
+  $('#create-pool-link').addEventListener('click', () => openPoolModal());
 
   renderTabs();
   renderBoard();

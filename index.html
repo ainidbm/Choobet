@@ -88,6 +88,11 @@
         </button>
       </div>
 
+      <!-- Pool creation link (subtle) -->
+      <div class="pool-actions" id="pool-actions">
+        <button class="create-pool-link" id="create-pool-link">+ 创建饮品池</button>
+      </div>
+
       <!-- History -->
       <section class="history" id="history" hidden>
         <h3 class="history-title">最近选中</h3>
@@ -120,7 +125,7 @@
     <div class="modal" role="dialog" aria-modal="true" aria-label="创建饮品池">
       <header class="modal-header">
         <h2 class="modal-title">创建饮品池</h2>
-        <button class="modal-close" id="pool-cancel" aria-label="关闭">&times;</button>
+        <button class="modal-close" id="pool-cancel" aria-label="关闭" onclick="document.getElementById('pool-modal').hidden=true;editingPoolId=null;document.getElementById('pool-save').textContent='保存'">&times;</button>
       </header>
       <input
         type="text"
@@ -130,6 +135,7 @@
         maxlength="12"
         autocomplete="off"
       >
+      <p class="drink-hint" id="drink-hint">请至少勾选一款饮品</p>
       <div class="drink-grid" id="drink-grid"></div>
       <footer class="modal-footer">
         <button class="btn-save" id="pool-save" disabled>保存</button>

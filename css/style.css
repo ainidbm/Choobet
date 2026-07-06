@@ -520,6 +520,26 @@ ul { list-style: none; }
   transform: scale(0.95);
 }
 
+/* — Pool creation link (subtle, below controls) — */
+.pool-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.create-pool-link {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  transition: color var(--dur-fast), background var(--dur-fast);
+}
+
+.create-pool-link:hover {
+  color: var(--accent-peach);
+  background: oklch(0.94 0.02 18 / 0.5);
+}
+
 /* ==============================
    History
    ============================== */
@@ -738,6 +758,12 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1;
+  padding-bottom: var(--space-sm);
 }
 
 .modal-title {
@@ -779,6 +805,19 @@ ul { list-style: none; }
 }
 
 .pool-name-input::placeholder { color: var(--text-muted); }
+
+/* — Drink hint — */
+.drink-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.drink-hint.satisfied {
+  opacity: 0.35;
+}
 
 /* — Drink Grid — */
 .drink-grid {
