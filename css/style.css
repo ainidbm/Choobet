@@ -579,6 +579,7 @@ ul { list-style: none; }
 
 .history-drink { font-weight: 500; color: var(--text); }
 .history-shop  { color: var(--text-muted); font-size: 0.72rem; }
+.history-price { color: var(--accent-green); font-size: 0.7rem; font-weight: 500; margin-left: 2px; }
 
 .history-item:first-child {
   background: oklch(0.94 0.03 18);

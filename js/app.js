@@ -44,6 +44,7 @@ let currentBoard   = 'main';
 let isAnimating    = false;
 let editingPoolId  = null;       // non-null when modal is editing an existing pool
 let brokenLogos    = new Set();  // logo URLs that failed to load
+let lastResult     = null;       // { drink, shop } of current stage result
 const logoToName   = {};         // logo URL → shop name mapping
 
 // Build logo→name lookup + preload all logos
@@ -150,6 +151,7 @@ async function animateSelection(boardId) {
   await sleep(350);
 
   // Reveal drink
+  lastResult = { drink: winner, shop };
   resultDrink.textContent = winner.name;
   resultShop.textContent = shop.name;
   resultPrice.textContent = priceVisible ? `¥${winner.price}` : '';
@@ -294,6 +296,9 @@ function renderBoard() {
   // Edit pool button visibility (only on custom pool boards)
   editPoolBtn.hidden = !currentBoard.startsWith('pool_');
 
+  // Clear cached result
+  lastResult = null;
+
   // Reset stage
   stageInner.hidden = true;
   stageIdle.hidden = false;
@@ -315,12 +320,17 @@ function renderHistory() {
     return;
   }
   historySec.hidden = false;
-  historyList.innerHTML = h.slice(0, 10).map(e => `
-    <li class="history-item">
-      <span class="history-drink">${e.drinkName}</span>
-      <span class="history-shop">${e.shopName}</span>
-    </li>
-  `).join('');
+  historyList.innerHTML = h.slice(0, 10).map(e => {
+    const result = findDrink(e.drinkId);
+    const price = result ? result.drink.price : null;
+    return `
+      <li class="history-item">
+        <span class="history-drink">${e.drinkName}</span>
+        <span class="history-shop">${e.shopName}</span>
+        ${priceVisible && price ? `<span class="history-price">¥${price}</span>` : ''}
+      </li>
+    `;
+  }).join('');
 }
 
 function renderRemoved() {
@@ -545,10 +555,14 @@ priceToggle.addEventListener('click', () => {
   priceVisible = !priceVisible;
   saveJSON(LS_KEYS.priceVisible, priceVisible);
   priceToggle.classList.toggle('on', priceVisible);
-  // Update results if visible
-  if (!stageInner.hidden && resultSlot.classList.contains('revealed')) {
-    // re-render current result price? We don't have the price cached; simplest: it'll show on next spin.
+
+  // Update current stage result price
+  if (!stageInner.hidden && resultSlot.classList.contains('revealed') && lastResult) {
+    resultPrice.textContent = priceVisible ? `¥${lastResult.drink.price}` : '';
   }
+
+  // Update history items
+  renderHistory();
 });
 
 // Like button
