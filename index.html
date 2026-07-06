@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>喝什么？ — 扭蛋奶茶选择器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧋</text></svg>">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ====== Header ====== -->
+    <header class="app-header">
+      <div class="header-top">
+        <h1 class="app-title">喝什么？</h1>
+        <p class="app-subtitle">扭一扭，帮你决定今天喝什么</p>
+      </div>
+      <label class="price-toggle" id="price-toggle">
+        <span class="toggle-label">💰</span>
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+      </label>
+    </header>
+
+    <!-- ====== Board Tabs ====== -->
+    <nav class="board-tabs" id="board-tabs" aria-label="选择板块">
+      <button class="tab active" data-board="main">🎰 全部</button>
+      <button class="tab" data-board="milktea">🧋 奶茶</button>
+      <button class="tab" data-board="fruittea">🍊 果茶</button>
+      <button class="tab" data-board="coffee">☕ 咖啡</button>
+      <button class="tab" data-board="matcha">🍵 抹茶</button>
+      <button class="tab" data-board="icecream">🍦 冰淇淋</button>
+      <!-- custom pool tabs -->
+    </nav>
+
+    <!-- ====== Main Board ====== -->
+    <main class="board" id="board">
+      <!-- Stage -->
+      <div class="stage" id="stage">
+        <div class="stage-inner" id="stage-inner" hidden>
+          <div class="logo-slot">
+            <img src="" alt="" id="logo-img" class="logo-img" onerror="this.style.opacity='0'">
+            <span class="logo-fallback" id="logo-fallback" hidden></span>
+          </div>
+          <div class="result-slot" id="result-slot">
+            <span class="result-drink" id="result-drink"></span>
+            <span class="result-shop" id="result-shop"></span>
+            <span class="result-price" id="result-price"></span>
+          </div>
+        </div>
+        <div class="stage-idle" id="stage-idle">
+          <span class="idle-icon">🎰</span>
+          <span class="idle-text">按下按钮试试手气</span>
+        </div>
+      </div>
+
+      <!-- Select Button -->
+      <button class="select-btn" id="select-btn" aria-label="随机选择">
+        <span class="select-btn-icon">🎰</span>
+        <span class="select-btn-text">扭 一 扭</span>
+      </button>
+
+      <!-- Controls -->
+      <div class="controls">
+        <label class="control-chip" id="no-repeat-chip">
+          <input type="checkbox" id="no-repeat" class="chip-checkbox">
+          <span class="chip-body">
+            <span class="chip-icon">🚫</span>
+            <span class="chip-text">排除已选</span>
+          </span>
+        </label>
+        <button class="control-chip reset-chip" id="reset-btn">
+          <span class="chip-body">
+            <span class="chip-icon">🔄</span>
+            <span class="chip-text">重置</span>
+          </span>
+        </button>
+        <button class="control-chip edit-pool-chip" id="edit-pool-btn" hidden>
+          <span class="chip-body">
+            <span class="chip-icon">✎</span>
+            <span class="chip-text">编辑池</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- History -->
+      <section class="history" id="history" hidden>
+        <h3 class="history-title">最近选中</h3>
+        <ul class="history-list" id="history-list"></ul>
+      </section>
+
+      <!-- Removed Drinks (minimized) -->
+      <section class="removed" id="removed" hidden>
+        <details class="removed-details">
+          <summary class="removed-summary">
+            <span class="removed-label">已移除</span>
+            <span class="removed-count" id="removed-count">0</span>
+          </summary>
+          <ul class="removed-list" id="removed-list"></ul>
+        </details>
+      </section>
+    </main>
+
+    <!-- ====== Footer ====== -->
+    <footer class="app-footer">
+      <button class="like-btn" id="like-btn" aria-label="点赞">
+        <span class="like-icon">❤️</span>
+        <span class="like-count" id="like-count">0</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- ====== Pool Modal ====== -->
+  <div class="modal-overlay" id="pool-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="创建饮品池">
+      <header class="modal-header">
+        <h2 class="modal-title">创建饮品池</h2>
+        <button class="modal-close" id="pool-cancel" aria-label="关闭">&times;</button>
+      </header>
+      <input
+        type="text"
+        class="pool-name-input"
+        id="pool-name"
+        placeholder="给池子起个名字……"
+        maxlength="12"
+        autocomplete="off"
+      >
+      <div class="drink-grid" id="drink-grid"></div>
+      <footer class="modal-footer">
+        <button class="btn-save" id="pool-save" disabled>保存</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ====== Scripts ====== -->
+  <script src="data/shops.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
