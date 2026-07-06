@@ -162,17 +162,7 @@ async function animateSelection(boardId) {
   }
   addHistory(boardId, { drinkId: winner.id, drinkName: winner.name, shopName: shop.name, ts: Date.now() });
 
-  // Wait for reveal animation + particles
-  await sleep(900);
-
-  // Reset stage visuals
-  logoImg.classList.remove('landed');
-  logoImg.src = '';
-  logoFallback.hidden = true;
-  logoImg.style.opacity = '';
-  stageInner.hidden = true;
-  stageIdle.hidden = false;
-
+  // Result stays visible — only resets on next spin
   return { drink: winner, shop };
 }
 
@@ -500,12 +490,21 @@ function deletePool(poolId) {
 // ==============================
 selectBtn.addEventListener('click', async () => {
   if (isAnimating) return;
+  isAnimating = true;
+  selectBtn.disabled = true;
   const result = await animateSelection(currentBoard);
+  isAnimating = false;
   if (result) {
     renderHistory();
     renderRemoved();
     renderTabs();
   }
+  // Re-enable button without resetting the stage result
+  const eligible = getEligibleDrinks(currentBoard);
+  const allDrinks = getDrinksForBoard(currentBoard);
+  selectBtn.disabled = eligible.length === 0;
+  selectBtn.querySelector('.select-btn-text').textContent =
+    eligible.length === 0 && allDrinks.length > 0 ? '已全部选过' : '扭 一 扭';
 });
 
 noRepeatCb.addEventListener('change', () => {
