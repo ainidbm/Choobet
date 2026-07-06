@@ -210,9 +210,11 @@ function carousel(shops, targetShop) {
         const delays = [120, 200, 320];
 
         if (decelIdx === decelCount - 1) {
-          // Last decel swap: must NOT be the target (avoids double-show)
+          // Last decel swap: avoid target if possible (single-shop pool → fallback)
           const nonTarget = shops.filter(s => s.id !== targetShop.id);
-          const pick = nonTarget[Math.floor(Math.random() * nonTarget.length)];
+          const pick = nonTarget.length
+            ? nonTarget[Math.floor(Math.random() * nonTarget.length)]
+            : shops[0];
           showLogoForShop(pick);
           lastIdx = shops.indexOf(pick);
         } else {
