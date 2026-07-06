@@ -63,6 +63,9 @@
   padding: 0;
 }
 
+/* Ensure [hidden] always wins over any CSS display value */
+[hidden] { display: none !important; }
+
 html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;

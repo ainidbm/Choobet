@@ -422,7 +422,7 @@ function openPoolModal(poolId = null) {
   // Update hint visibility based on initial state
   updatePoolSaveState();
 
-  poolModal.hidden = false;
+  poolModal.removeAttribute('hidden');
   poolNameInp.focus();
 }
 
