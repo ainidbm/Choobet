@@ -4,12 +4,21 @@ const SHOPS = [
     name: '蜜雪冰城',
     logo: 'images/logos/mixuebingcheng.png',
     drinks: [
-      { id: 'mxbc-001', name: '珍珠奶茶',   categories: ['奶茶'],           price: 8  },
-      { id: 'mxbc-002', name: '柠檬水',     categories: ['果茶'],           price: 4  },
-      { id: 'mxbc-003', name: '抹茶拿铁',   categories: ['抹茶', '咖啡'],   price: 12 },
-      { id: 'mxbc-004', name: '草莓奶昔',   categories: ['奶茶'],           price: 10 },
-      { id: 'mxbc-005', name: '芒果冰沙',   categories: ['果茶'],           price: 9  },
-      { id: 'mxbc-006', name: '摩卡摇摇奶昔', categories: ['咖啡', '奶茶'], price: 11 },
+      { id: 'mxbc-001', name: '棒打鲜橙',   categories: ['果茶'],           price: 6  },
+      { id: 'mxbc-002', name: '冰鲜柠檬水',     categories: ['果茶'],           price: 4  },
+      { id: 'mxbc-003', name: '珍珠奶茶',   categories: ['奶茶'],   price: 6 },
+      { id: 'mxbc-004', name: '芋圆葡萄',   categories: ['果茶'],           price: 8 },
+      { id: 'mxbc-005', name: '茉莉奶绿',   categories: ['奶茶'],           price: 6  },
+      { id: 'mxbc-006', name: '蜜桃四季春', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-007', name: '满杯百香果', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-008', name: '柠檬绿茶', categories: ['果茶'], price: 5 },
+      { id: 'mxbc-009', name: '草莓啵啵', categories: ['果茶'], price: 8 },
+      { id: 'mxbc-010', name: '桃喜芒芒', categories: ['果茶'], price: 6 },
+      { id: 'mxbc-011', name: '蓝莓果粒茶', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-012', name: '柚子香柠茶', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-013', name: '大橘果粒茶', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-014', name: '摩卡摇摇奶昔', categories: ['果茶'], price: 11 },
+      { id: 'mxbc-015', name: '葡萄酸奶', categories: ['酸奶'], price: 9 },
     ]
   },
   {
@@ -66,14 +75,15 @@ const SHOPS = [
   }
 ];
 
-const CATEGORIES = ['奶茶', '果茶', '咖啡', '抹茶', '冰淇淋'];
+const CATEGORIES = ['奶茶', '果茶', '咖啡', '抹茶', '冰淇淋', '酸奶'];
 
 const CATEGORY_TO_BOARD = {
   '奶茶': 'milktea',
   '果茶': 'fruittea',
   '咖啡': 'coffee',
   '抹茶': 'matcha',
-  '冰淇淋': 'icecream'
+  '冰淇淋': 'icecream',
+  '酸奶': 'yogurt'
 };
 
 function findDrink(drinkId) {
