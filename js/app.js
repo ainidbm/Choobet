@@ -36,7 +36,8 @@ const drinkGrid    = $('#drink-grid');
 const drinkSearch  = $('#drink-search');
 const poolSaveBtn  = $('#pool-save');
 const poolCancelBtn = $('#pool-cancel');
-const editPoolBtn  = $('#edit-pool-btn');
+const editPoolBtn   = $('#edit-pool-btn');
+const deletePoolBtn = $('#delete-pool-btn');
 
 // ==============================
 //  State
@@ -269,9 +270,19 @@ function renderTabs() {
     btn.className = 'tab tab-pool';
     btn.dataset.board = pool.id;
     btn.textContent = `📦 ${pool.name}`;
+
+    // Tap → switch to pool
     btn.addEventListener('click', () => switchBoard(pool.id));
-    // Delete pool on long-press / right-click
+
+    // Long-press (mobile) / right-click (desktop) → delete
+    let longPressTimer;
+    btn.addEventListener('touchstart', () => {
+      longPressTimer = setTimeout(() => { deletePool(pool.id); }, 600);
+    });
+    btn.addEventListener('touchend', () => clearTimeout(longPressTimer));
+    btn.addEventListener('touchmove', () => clearTimeout(longPressTimer));
     btn.addEventListener('contextmenu', (e) => { e.preventDefault(); deletePool(pool.id); });
+
     boardTabs.appendChild(btn);
   });
 
@@ -294,8 +305,10 @@ function renderBoard() {
     selectBtn.querySelector('.select-btn-text').textContent = '扭 一 扭';
   }
 
-  // Edit pool button visibility (only on custom pool boards)
-  editPoolBtn.hidden = !currentBoard.startsWith('pool_');
+  // Edit/delete pool buttons visibility (only on custom pool boards)
+  const isPool = currentBoard.startsWith('pool_');
+  editPoolBtn.hidden = !isPool;
+  deletePoolBtn.hidden = !isPool;
 
   // Clear cached result
   lastResult = null;
@@ -579,6 +592,11 @@ poolModal.addEventListener('click', (e) => {
 });
 editPoolBtn.addEventListener('click', () => {
   openPoolModal(currentBoard);
+});
+deletePoolBtn.addEventListener('click', () => {
+  if (confirm('确定删除这个饮品池吗？')) {
+    deletePool(currentBoard);
+  }
 });
 
 // Price toggle
