@@ -810,6 +810,63 @@ ul { list-style: none; }
 
 .pool-name-input::placeholder { color: var(--text-muted); }
 
+/* — Drink search — */
+.drink-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-family: var(--font-body);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--dur-fast);
+  flex-shrink: 0;
+}
+
+.drink-search:focus {
+  border-color: var(--accent-peach);
+}
+
+.drink-search::placeholder { color: var(--text-muted); }
+
+/* Clear search button for webkit */
+.drink-search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  background: var(--text-muted);
+  mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>") center/contain no-repeat;
+  cursor: pointer;
+}
+
+/* — Shop group — */
+.shop-group {
+  margin-bottom: var(--space-sm);
+}
+
+.shop-group-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  padding: 4px 4px 6px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-xs);
+}
+
+.shop-group-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: var(--space-xs);
+}
+
+/* Hidden by search filter */
+.drink-card.filtered-out {
+  display: none;
+}
+
 /* — Drink hint — */
 .drink-hint {
   font-size: 0.75rem;

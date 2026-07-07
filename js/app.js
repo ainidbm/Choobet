@@ -33,6 +33,7 @@ const priceToggle  = $('#price-toggle');
 const poolModal    = $('#pool-modal');
 const poolNameInp  = $('#pool-name');
 const drinkGrid    = $('#drink-grid');
+const drinkSearch  = $('#drink-search');
 const poolSaveBtn  = $('#pool-save');
 const poolCancelBtn = $('#pool-cancel');
 const editPoolBtn  = $('#edit-pool-btn');
@@ -410,15 +411,29 @@ function openPoolModal(poolId = null) {
     : true;
   poolSaveBtn.textContent = poolId ? '保存修改' : '保存';
 
-  // Render all drinks as cards with pre-checked state
-  drinkGrid.innerHTML = allDrinks.map(d => `
-    <label class="drink-card" data-drink-id="${d.id}" onclick="void(0)">
-      <input type="checkbox" class="drink-card-check" value="${d.id}" ${checkedSet.has(d.id) ? 'checked' : ''}>
-      <span class="drink-card-body">
-        <span class="drink-card-name">${d.name}</span>
-        <span class="drink-card-shop">${d.shopName}</span>
-      </span>
-    </label>
+  // Render all drinks grouped by shop
+  drinkSearch.value = '';
+  const grouped = new Map();
+  allDrinks.forEach(d => {
+    if (!grouped.has(d.shopName)) grouped.set(d.shopName, []);
+    grouped.get(d.shopName).push(d);
+  });
+
+  drinkGrid.innerHTML = [...grouped].map(([shopName, drinks]) => `
+    <div class="shop-group" data-shop="${shopName}">
+      <h4 class="shop-group-header">${shopName}</h4>
+      <div class="shop-group-cards">
+        ${drinks.map(d => `
+          <label class="drink-card" data-drink-id="${d.id}" data-shop="${d.shopName}" data-name="${d.name}" onclick="void(0)">
+            <input type="checkbox" class="drink-card-check" value="${d.id}" ${checkedSet.has(d.id) ? 'checked' : ''}>
+            <span class="drink-card-body">
+              <span class="drink-card-name">${d.name}</span>
+              <span class="drink-card-shop">${d.shopName}</span>
+            </span>
+          </label>
+        `).join('')}
+      </div>
+    </div>
   `).join('');
 
   // Update hint visibility based on initial state
@@ -427,6 +442,22 @@ function openPoolModal(poolId = null) {
   poolModal.removeAttribute('hidden');
   poolNameInp.focus();
 }
+
+// Search filter for drink cards
+function filterDrinks(query) {
+  const q = query.trim().toLowerCase();
+  $$('.drink-card').forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    const shop = (card.dataset.shop || '').toLowerCase();
+    card.classList.toggle('filtered-out', q !== '' && !name.includes(q) && !shop.includes(q));
+  });
+  // Hide empty shop groups
+  $$('.shop-group').forEach(group => {
+    const visible = [...group.querySelectorAll('.drink-card')].some(c => !c.classList.contains('filtered-out'));
+    group.style.display = q === '' ? '' : (visible ? '' : 'none');
+  });
+}
+drinkSearch.addEventListener('input', () => filterDrinks(drinkSearch.value));
 
 // Modal validation — attached once, checks state each time
 function updatePoolSaveState() {
