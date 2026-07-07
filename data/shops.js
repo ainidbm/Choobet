@@ -4,33 +4,64 @@ const SHOPS = [
     name: '蜜雪冰城',
     logo: 'images/logos/mixuebingcheng.png',
     drinks: [
-      { id: 'mxbc-001', name: '棒打鲜橙',   categories: ['果茶'],           price: 6  },
-      { id: 'mxbc-002', name: '冰鲜柠檬水',     categories: ['果茶'],           price: 4  },
-      { id: 'mxbc-003', name: '珍珠奶茶',   categories: ['奶茶'],   price: 6 },
-      { id: 'mxbc-004', name: '芋圆葡萄',   categories: ['果茶'],           price: 8 },
-      { id: 'mxbc-005', name: '茉莉奶绿',   categories: ['奶茶'],           price: 6  },
+      { id: 'mxbc-001', name: '冰鲜柠檬水', categories: ['果茶'], price: 4  },
+      { id: 'mxbc-002', name: '棒打鲜橙', categories: ['果茶'], price: 6  },
+      { id: 'mxbc-003', name: '芝士奶盖四季春', categories: ['奶茶'], price:8 },
+      { id: 'mxbc-004', name: '茉莉奶绿', categories: ['奶茶'], price: 6  },
+      { id: 'mxbc-005', name: '珍珠奶茶', categories: ['奶茶'], price: 6 },
       { id: 'mxbc-006', name: '蜜桃四季春', categories: ['果茶'], price: 7 },
       { id: 'mxbc-007', name: '满杯百香果', categories: ['果茶'], price: 7 },
       { id: 'mxbc-008', name: '柠檬绿茶', categories: ['果茶'], price: 5 },
-      { id: 'mxbc-009', name: '草莓啵啵', categories: ['果茶'], price: 8 },
-      { id: 'mxbc-010', name: '桃喜芒芒', categories: ['果茶'], price: 6 },
-      { id: 'mxbc-011', name: '蓝莓果粒茶', categories: ['果茶'], price: 7 },
-      { id: 'mxbc-012', name: '柚子香柠茶', categories: ['果茶'], price: 7 },
-      { id: 'mxbc-013', name: '大橘果粒茶', categories: ['果茶'], price: 7 },
-      { id: 'mxbc-014', name: '摩卡摇摇奶昔', categories: ['果茶'], price: 11 },
-      { id: 'mxbc-015', name: '葡萄酸奶', categories: ['酸奶'], price: 9 },
+      { id: 'mxbc-009', name: '芋圆葡萄', categories: ['果茶'], price: 8 },
+      { id: 'mxbc-010', name: '草莓啵啵', categories: ['果茶'], price: 8 },
+      { id: 'mxbc-011', name: '桃喜芒芒', categories: ['果茶'], price: 6 },
+      { id: 'mxbc-012', nname: '菠萝百香果', categories: ['果茶'], price: 8 },
+      { id: 'mxbc-013', name: '蓝莓果粒茶', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-014', name: '柚子香柠茶', categories: ['果茶'], price: 7 },
+      { id: 'mxbc-015', name: '柚子香柠红茶', categories: ['果茶'], price: 6 },
+      { id: 'mxbc-016', name: '珍珠奶茶', categories: ['奶茶'], price: 6 },
+      { id: 'mxbc-017', name: '椰果奶茶', categories: ['奶茶'], price: 7 },
+      { id: 'mxbc-018', name: '芋圆奶茶', categories: ['奶茶'], price: 8 },
+      { id: 'mxbc-019', name: '原味奶茶', categories: ['奶茶'], price: 6 },
+      { id: 'mxbc-020', name: '三拼霸霸奶茶', categories: ['奶茶'], price: 8 },
+      { id: 'mxbc-021', name: '布丁奶茶', categories: ['奶茶'], price: 7 },
+      { id: 'mxbc-022', name: '双拼奶茶', categories: ['奶茶'], price: 7 },
+      { id: 'mxbc-023', name: '芝士奶盖绿茶', categories: ['奶茶'], price: 8 },
+      { id: 'mxbc-024', name: '新鲜冰淇淋（黑芝麻脆筒）', categories: ['冰淇淋'], price: 2 },
+      { id: 'mxbc-025', name: '草莓摇摇奶昔', categories: ['冰淇淋'], price: 6 },
+      { id: 'mxbc-026', name: '脆皮大圣代', categories: ['冰淇淋'], price: 7 },
+      { id: 'mxbc-027', name: '雪王大圣代（奥利奥饼干风味）', categories: ['冰淇淋'], price: 6 },
+      { id: 'mxbc-028', name: '雪王大圣代（草莓）', categories: ['冰淇淋'], price: 6 },
+      { id: 'mxbc-029', name: '雪王大圣代（芒果）', categories: ['冰淇淋'], price: 6 },
+      { id: 'mxbc-030', name: '草莓摇摇奶昔', categories: ['冰淇淋'], price: 6 },
+      { id: 'mxbc-031', name: '四季春轻乳茶', categories: ['奶茶'], price: 6  },
+      { id: 'mxbc-032', name: '四季春轻乳茶', categories: ['奶茶'], price: 6  },
+      { id: 'mxbc-033', name: '蜜桃甘露', categories: ['奶茶'], price: 9  },
+      { id: 'mxbc-034', name: '薄荷奶绿', categories: ['奶茶'], price: 6  },
+      { id: 'mxbc-035', name: '美式咖啡', categories: ['咖啡'], price: 5  },
+      { id: 'mxbc-036', name: '葡萄冰美式', categories: ['咖啡'], price: 6  },
+      { id: 'mxbc-037', name: '爆汁柠柚咖', categories: ['咖啡'], price: 8  },
+      { id: 'mxbc-038', name: '真橙美式', categories: ['咖啡'], price: 7  },
+      { id: 'mxbc-039', name: '真橙拿铁', categories: ['咖啡'], price: 8  },
+      { id: 'mxbc-040', name: '茉莉拿铁咖啡', categories: ['咖啡'], price: 7  },
+      { id: 'mxbc-041', name: '拿铁咖啡', categories: ['咖啡'], price: 7  },
+      { id: 'mxbc-042', name: '雪王雪顶咖啡', categories: ['咖啡'], price: 7  },
+      { id: 'mxbc-043', name: '港式杨枝甘露', categories: ['奶茶'], price: 9  },
+      { id: 'mxbc-044', name: '生椰拿铁', categories: ['咖啡'], price: 8  },
+      { id: 'mxbc-045', name: '茉莉绿茶', categories: ['奶茶'], price: 4  },
+      { id: 'mxbc-046', name: '高山四季春茶', categories: ['奶茶'], price: 4  },
     ]
   },
   {
-    id: 'chabaidao',
-    name: '茶百道',
-    logo: 'images/logos/chabaidao.png',
+    id: 'yihetang',
+    name: '益禾堂',
+    logo: 'images/logos/yihetang.png',
     drinks: [
-      { id: 'cbd-001', name: '杨枝甘露',     categories: ['果茶'],         price: 18 },
-      { id: 'cbd-002', name: '豆乳玉麒麟',   categories: ['奶茶'],         price: 16 },
-      { id: 'cbd-003', name: '茉莉奶绿',     categories: ['奶茶', '抹茶'], price: 14 },
-      { id: 'cbd-004', name: '西瓜啵啵',     categories: ['果茶'],         price: 15 },
-      { id: 'cbd-005', name: '生椰拿铁',     categories: ['咖啡'],         price: 17 },
+      { id: 'yht-001', name: '真有料烧仙草', categories: ['奶茶'], price: 13 },
+      { id: 'yht-002', name: '薄荷奶绿', categories: ['奶茶'], price: 9 },
+      { id: 'yht-003', name: '益禾烤奶', categories: ['奶茶'], price: 8 },
+      { id: 'yht-004', name: '薄荷柠檬水', categories: ['果茶'], price: 5 },
+      { id: 'yht-005', name: '翠峰茉莉', categories: ['纯茶'], price: 5 },
     ]
   },
   {
@@ -75,7 +106,7 @@ const SHOPS = [
   }
 ];
 
-const CATEGORIES = ['奶茶', '果茶', '咖啡', '抹茶', '冰淇淋', '酸奶'];
+const CATEGORIES = ['奶茶', '果茶', '咖啡', '抹茶', '冰淇淋', '酸奶', '纯茶'];
 
 const CATEGORY_TO_BOARD = {
   '奶茶': 'milktea',
@@ -83,7 +114,8 @@ const CATEGORY_TO_BOARD = {
   '咖啡': 'coffee',
   '抹茶': 'matcha',
   '冰淇淋': 'icecream',
-  '酸奶': 'yogurt'
+  '酸奶': 'yogurt',
+  '纯茶': 'puretea'
 };
 
 function findDrink(drinkId) {
